@@ -4,22 +4,31 @@ import re
 
 producto_buscar = input("Que tipo de producto deseas buscar?")
 
-url = f"https://www.falabella.com/falabella-cl/search?Ntt={producto_buscar}"
+url = f"https://www.zmart.cl/Scripts/prodSearch.asp?strSearch={producto_buscar}"
 page = requests.get(url).text
-doc = BeautifulSoup(page , "html.parser")
+doc = BeautifulSoup(page, "html.parser")
+div = doc.find(id="ResultadoBusqueda")
+#print(div)
+items = div.find_all(text=re.compile(producto_buscar))
 
-page_text = doc.find_all(class_= "jsx-1794558402 jsx-1104282991 pagination-button-mkp")
-next_page = int(page_text[0].text.strip())
-cur_page = int(next_page) - 1
-max_page = int(page_text[1].text.strip())
-print(cur_page)
-print(max_page)
+#Nombre del Producto 
+nombreProducto = div.find_all( class_ = "ProdBox146_Descripcion")
 
-for page in range(1 , max_page + 1 ):
-    url = f"https://www.falabella.com/falabella-cl/search?Ntt={producto_buscar}&page={page}"
-    page = requests.get(url).text
-    doc = BeautifulSoup(page, "html.parser")
 
-    items = doc.find_all(text=re.compile(producto_buscar))
-    for item in items:
-        print(item)
+#Precio del Producto
+precios = div.find_all( class_ = "ProdBox146_Precio")
+parent = precios[0].parent
+countP = 0
+#Check para cantidad de elementos
+for precio in precios:
+    countP = countP + 1
+for titulo in nombreProducto:
+    print(titulo.text)
+print(f"el contador llego hasta {countP}")
+
+for i in range(0 , countP):
+    print(nombreProducto[i].text)
+    print(precios[i].text)
+
+
+#print(precioproducto)
