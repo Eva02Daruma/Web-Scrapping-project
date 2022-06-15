@@ -19,7 +19,7 @@ nombreProducto = div.find_all( class_ = "ProdBox146_Descripcion")
 precios = div.find_all( class_ = "ProdBox146_Precio")
 parent = precios[0].parent
 countP = 0
-#Check para cantidad de elementos
+#Check para cantidad de elementpokemonos
 for precio in precios:
     countP = countP + 1
 for titulo in nombreProducto:
