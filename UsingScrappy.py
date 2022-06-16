@@ -7,3 +7,8 @@ class ImdbSpider(Spider):
 
     def parse(self, response):
         pass
+
+
+
+#Webpage tutorial 
+#https://www.scrapingbee.com/blog/crawling-python/
